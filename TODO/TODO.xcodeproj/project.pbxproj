@@ -14,6 +14,7 @@
 		3EC7687F1DBD8D8D00E05068 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EC7687D1DBD8D8D00E05068 /* LaunchScreen.storyboard */; };
 		3EC768871DBDA03400E05068 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC768861DBDA03400E05068 /* NewTaskViewController.swift */; };
 		3EC768891DBDA06600E05068 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC768881DBDA06600E05068 /* TaskViewController.swift */; };
+		3EC7688E1DBDAC6700E05068 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC7688D1DBDAC6700E05068 /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3EC768801DBD8D8D00E05068 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EC768861DBDA03400E05068 /* NewTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		3EC768881DBDA06600E05068 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		3EC7688D1DBDAC6700E05068 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 		3EC7688C1DBDA14900E05068 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3EC7688D1DBDAC6700E05068 /* Task.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			files = (
 				3EC768771DBD8D8D00E05068 /* ViewController.swift in Sources */,
 				3EC768891DBDA06600E05068 /* TaskViewController.swift in Sources */,
+				3EC7688E1DBDAC6700E05068 /* Task.swift in Sources */,
 				3EC768871DBDA03400E05068 /* NewTaskViewController.swift in Sources */,
 				3EC768751DBD8D8D00E05068 /* AppDelegate.swift in Sources */,
 			);
