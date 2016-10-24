@@ -67,6 +67,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="taskTableView" destination="s8q-Ac-Umu" id="ZHI-ue-4Xr"/>
                         <segue destination="pjd-Tp-XiU" kind="show" id="Jd9-RZ-rKo"/>
                     </connections>
                 </viewController>
@@ -90,8 +91,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <items>
                                     <navigationItem title="New Task" id="XaY-2D-veX">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="hE4-Xk-8sw"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Create" id="nk4-kS-iYX"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="hE4-Xk-8sw">
+                                            <connections>
+                                                <action selector="cancel:" destination="9Ey-Kf-rcF" id="boZ-lM-s2e"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Create" id="nk4-kS-iYX">
+                                            <connections>
+                                                <action selector="create:" destination="9Ey-Kf-rcF" id="xum-tT-AZh"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -132,6 +141,11 @@
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="descriptionTaskTextView" destination="v0l-ae-a9z" id="80e-W1-giY"/>
+                        <outlet property="priorityTextField" destination="a7X-3O-5vj" id="8f5-V9-qwm"/>
+                        <outlet property="titleTextField" destination="l0G-5I-lZk" id="M4j-hf-8qj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Phh-63-e0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -183,6 +197,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="save:" destination="pjd-Tp-XiU" eventType="touchUpInside" id="tX6-oa-DE1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -194,6 +211,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Task" id="gYO-JF-oa5"/>
+                    <connections>
+                        <outlet property="descriptionTaskTextView" destination="NTl-o6-gDl" id="pf7-c2-jc5"/>
+                        <outlet property="priorityTextField" destination="CgB-nm-sKy" id="ArA-KY-K6j"/>
+                        <outlet property="titleTextField" destination="7rz-u4-2kK" id="wBB-cP-A2X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zr5-4g-YKv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

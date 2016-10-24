@@ -10,10 +10,29 @@ import UIKit
 
 class NewTaskViewController: UIViewController {
 
+    //MARK: - IBOutlets
+    
+    @IBOutlet weak var titleTextField: UITextField!
+   
+    @IBOutlet weak var priorityTextField: UITextField!
+    @IBOutlet weak var descriptionTaskTextView: UITextView!
+    
+    //MARK: - Properties
+    
+    //MARK: - IBActions
+    @IBAction func cancel(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func create(sender: AnyObject) {
+        
+    }
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,6 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    //MARK: - IBOutlets
+    @IBOutlet weak var taskTableView: UITableView!
+    
+    //MARK: - Properties
+    
+    //MARK: - IBActions
+    
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
