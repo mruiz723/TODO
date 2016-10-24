@@ -46,12 +46,12 @@ class Task: NSObject, NSCoding {
         aCoder.encodeObject(descriptionTask, forKey: "descriptionTask")
     }
     
-    func save(tasks:[Task]) {
+    static func save(tasks:[Task]) {
         let data = NSKeyedArchiver.archivedDataWithRootObject(tasks)
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Tasks")
     }
     
-    func tasks() -> [Task] {
+    class func tasks() -> [Task] {
         var tasks = [Task]()
         
         if let data = NSUserDefaults.standardUserDefaults().objectForKey("Tasks") as? NSData {
@@ -61,6 +61,10 @@ class Task: NSObject, NSCoding {
         }
         
         return tasks
+    }
+    
+    class func priorities() -> [String] {
+        return ["","Alta", "Media", "Baja"]
     }
     
 }
