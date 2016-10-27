@@ -84,18 +84,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let detailAction = UITableViewRowAction(style: .Normal, title: "Detail") { (action, indexPath) in
-            self.performSegueWithIdentifier("task", sender: ["index":indexPath.row, "type":"detail"])
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.performSegueWithIdentifier("task", sender: ["index":indexPath.row, "type":"detail"])
+            })
+            
         }
         
         detailAction.backgroundColor = UIColor.greenColor()
         
         let editAction = UITableViewRowAction(style: .Normal, title: "Edit") { (action, indexPath) in
-            self.performSegueWithIdentifier("task", sender: ["index":indexPath.row, "type":"edit"])
+            dispatch_async(dispatch_get_main_queue(), {
+                self.performSegueWithIdentifier("task", sender: ["index":indexPath.row, "type":"edit"])
+            })
         }
         
-        detailAction.backgroundColor = UIColor.grayColor()
+        editAction.backgroundColor = UIColor.blueColor()
         
-        return [detailAction,editAction]
+        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tasks?.removeAtIndex(indexPath.row)
+                Task.save(self.tasks!)
+                self.taskTableView.reloadData()
+            })
+        }
+        
+        deleteAction.backgroundColor = UIColor.redColor()
+        
+        return [detailAction,editAction,deleteAction]
     }
     
     //MARK: - NewTaskViewControllerDelegate

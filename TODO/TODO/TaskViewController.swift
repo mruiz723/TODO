@@ -69,6 +69,10 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         if type == "detail" {
             saveButton.removeFromSuperview()
+            titleTextField.enabled = false
+            priorityTextField.enabled = false
+            descriptionTaskTextView.editable = false
+            title = "Detail Task"
         }
         
     }
