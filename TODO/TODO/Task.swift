@@ -51,16 +51,38 @@ class Task: NSObject, NSCoding {
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Tasks")
     }
     
-    class func tasks() -> [Task] {
-        var tasks = [Task]()
-        
-        if let data = NSUserDefaults.standardUserDefaults().objectForKey("Tasks") as? NSData {
-            if let objectTasks = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Task] {
-                tasks = objectTasks
+//    class func tasks() -> [Task] {
+//        var tasks = [Task]()
+//        
+//        if let data = NSUserDefaults.standardUserDefaults().objectForKey("Tasks") as? NSData {
+//            if let objectTasks = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Task] {
+//                tasks = objectTasks
+//            }
+//        }
+//        
+//        return tasks
+//    }
+
+    static func tasks(completionHandler: CompletionHandler){
+        Services.tasks { (success, response) in
+            if success {
+                var tasks = [Task]()
+                for(_, value) in response {
+                    let array = value as! NSArray
+                    for itemTask in array {
+                        let task = Task()
+                        let dictTask = itemTask as! NSDictionary
+                        for(keyTask, valueTask) in dictTask{
+                            if task.respondsToSelector(NSSelectorFromString(keyTask as! String)) {
+                                task.setValue(valueTask, forKey: keyTask as! String)
+                            }
+                        }
+                        tasks.append(task)
+                    }
+                }
+                completionHandler(success:success, response: ["tasks":tasks])
             }
         }
-        
-        return tasks
     }
     
     class func priorities() -> [String] {

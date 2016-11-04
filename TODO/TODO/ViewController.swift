@@ -21,7 +21,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tasks = Task.tasks()
+//        tasks = Task.tasks()
+        Task.tasks { (success, response) in
+            if success {
+                if let tasks = response["tasks"] as? [Task] {
+                    self.tasks = tasks
+                    self.taskTableView.reloadData()
+                }
+            }else {
+                print("Error: \(response["error"])")
+            }
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +61,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     //MARK: - UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (tasks?.count)!
+        if tasks != nil {
+            return (tasks?.count)!
+        }
+        return 0
     }
 
     
