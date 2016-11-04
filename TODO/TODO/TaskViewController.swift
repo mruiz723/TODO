@@ -37,10 +37,20 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 
                 let priority = Task.priorities().indexOf(priorityTextField.text!)
                 let descriptionTask = descriptionTaskTextView.text.characters.count > 0 ? descriptionTaskTextView.text : ""
-                let task = Task(title: title, priority:priority! , descriptionTask: descriptionTask)
                 
-                delegate?.didUpdate(task)
-                self.navigationController?.popViewControllerAnimated(true)
+                task?.title = title
+                task?.priority = priority!
+                task?.descriptionTask = descriptionTask
+                
+                Task.save(["_id": (task?.idTask)!, "title": (task?.title)!, "priority": (task?.priority)!, "descriptionTask": (task?.descriptionTask)!], completionHandler: { (success, response) in
+                    
+                    if success {
+                        self.delegate?.didUpdate(self.task!)
+                    }else {
+                        print("Error: \(response["error"] as! String)")
+                    }
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
             }
         }
         

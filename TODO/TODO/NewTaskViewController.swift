@@ -41,10 +41,17 @@ class NewTaskViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 
                 let priority = Task.priorities().indexOf(priorityTextField.text!)
                 let descriptionTask = descriptionTaskTextView.text.characters.count > 0 ? descriptionTaskTextView.text : ""
-                let task = Task(title: title, priority:priority! , descriptionTask: descriptionTask)
                 
-                delegate?.didCreate(task)
-                dismissViewControllerAnimated(true, completion: nil)
+                Task.save(["title": title, "priority": priority!, "descriptionTask": descriptionTask], completionHandler: { (success, response) in
+                    
+                    if success {
+                        let task = response["task"] as! Task
+                        self.delegate?.didCreate(task)
+                    }else {
+                        print("Error \(response["error"] as! String)")
+                    }
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
             }
         }
         

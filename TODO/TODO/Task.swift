@@ -11,14 +11,16 @@ import Foundation
 class Task: NSObject, NSCoding {
 
     //MARK: - Properties
-    var title:String
-    var priority:Int
+    var idTask: String
+    var title: String
+    var priority: Int
     var descriptionTask: String
     
     //MARK: - Init
     
     //Designated Initializer
-    init(title:String, priority:Int, descriptionTask:String) {
+    init(idTask: String, title:String, priority:Int, descriptionTask:String) {
+        self.idTask = idTask
         self.title = title
         self.priority = priority
         self.descriptionTask = descriptionTask
@@ -28,41 +30,62 @@ class Task: NSObject, NSCoding {
     
    
     required convenience init(coder aDecoder: NSCoder) {
+        let idTask = aDecoder.decodeObjectForKey("idTask") as! String
         let title = aDecoder.decodeObjectForKey("title") as! String
         let priority = aDecoder.decodeIntForKey("priority")
         let descriptionTask = aDecoder.decodeObjectForKey("descriptionTask") as! String
         
-        self.init(title:title, priority:Int(priority), descriptionTask:descriptionTask)
+        self.init(idTask: idTask, title: title, priority:Int(priority), descriptionTask:descriptionTask)
     }
     
     //Convenience Initializer
     convenience override init() {
-        self.init(title:"", priority:0, descriptionTask:"")
+        self.init(idTask: "", title:"", priority:0, descriptionTask:"")
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(idTask, forKey: "idTask")
         aCoder.encodeObject(title, forKey: "title")
         aCoder.encodeInt(Int32(priority), forKey: "priority")
         aCoder.encodeObject(descriptionTask, forKey: "descriptionTask")
     }
     
-    static func save(tasks:[Task]) {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(tasks)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Tasks")
-    }
-    
-//    class func tasks() -> [Task] {
-//        var tasks = [Task]()
-//        
-//        if let data = NSUserDefaults.standardUserDefaults().objectForKey("Tasks") as? NSData {
-//            if let objectTasks = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Task] {
-//                tasks = objectTasks
-//            }
-//        }
-//        
-//        return tasks
+//    static func save(tasks:[Task]) {
+//        let data = NSKeyedArchiver.archivedDataWithRootObject(tasks)
+//        NSUserDefaults.standardUserDefaults().setObject(data, forKey: "Tasks")
 //    }
+    
+    
+    class func tasks() -> [Task] {
+        var tasks = [Task]()
+        
+        if let data = NSUserDefaults.standardUserDefaults().objectForKey("Tasks") as? NSData {
+            if let objectTasks = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Task] {
+                tasks = objectTasks
+            }
+        }
+        
+        return tasks
+    }
 
+    static func save(task:[String: AnyObject], completionHandler: CompletionHandler) {
+        Services.save(task) { (success, response) in
+            if success {
+                let idTask = response["_id"] as! String
+                let title = response["title"] as! String
+                let priority = Int(response["priority"] as! String)!
+                let descriptionTask = response["title"] as! String
+                
+                let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+                
+                completionHandler(success: success, response: ["task": task])
+            }else {
+                completionHandler(success: success, response: response)
+            }
+        }
+    }
+
+    
     static func tasks(completionHandler: CompletionHandler){
         Services.tasks { (success, response) in
             if success {

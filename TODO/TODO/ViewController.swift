@@ -90,7 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if editingStyle == .Delete
         {
             tasks?.removeAtIndex(indexPath.row)
-            Task.save(tasks!)
+//            Task.save(tasks!)
             tableView.reloadData()
         }
     }
@@ -117,7 +117,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.tasks?.removeAtIndex(indexPath.row)
-                Task.save(self.tasks!)
+//                Task.save(self.tasks!)
                 self.taskTableView.reloadData()
             })
         }
@@ -130,14 +130,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //MARK: - NewTaskViewControllerDelegate
     func didCreate(task: Task) {
         tasks?.append(task)
-        Task.save(tasks!)
+//        Task.save(tasks!)
         taskTableView.reloadData()
     }
     
     //MARK: - TaskViewControllerDelegate
     func didUpdate(task: Task) {
         tasks![currentIndex!] = task
-        Task.save(tasks!)
+//        Task.save(tasks!)
         taskTableView.reloadData()
     }
     
