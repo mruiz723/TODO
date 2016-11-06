@@ -11,21 +11,13 @@ import Alamofire
 
 
 typealias CompletionHandler = (success:Bool, response:[String: AnyObject]) -> ()
-let headers = [
-    "Authorization": "Basic a2lkX0h5NUI1WUZleDo3NzRlN2JkYzZiNTc0MTAzOWM0NzkxYjY4ZTIxOWVkYw==",
-    "Content-Type": "application/x-www-form-urlencoded"
-]
+
 
 struct Services {
     
     static func tasks(completionHandler:CompletionHandler) {
         
         let urlString = kBaseUrl + kAppIDKenvey + ktasks
-        let headers = [
-            "Authorization": "Basic a2lkX0h5NUI1WUZleDo3NzRlN2JkYzZiNTc0MTAzOWM0NzkxYjY4ZTIxOWVkYw==",
-            "Content-Type": "application/x-www-form-urlencoded"
-        ]
-        
         
         Alamofire.request(.GET, urlString, headers: headers).validate()
             .responseJSON { response in

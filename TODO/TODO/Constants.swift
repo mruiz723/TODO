@@ -12,3 +12,7 @@ import Foundation
 let kBaseUrl = "https://baas.kinvey.com/appdata/"
 let kAppIDKenvey = "kid_Hy5B5YFex/"
 let ktasks = "tasks/"
+let headers = [
+    "Authorization": "Basic a2lkX0h5NUI1WUZleDo3NzRlN2JkYzZiNTc0MTAzOWM0NzkxYjY4ZTIxOWVkYw==",
+    "Content-Type": "application/x-www-form-urlencoded"
+]
