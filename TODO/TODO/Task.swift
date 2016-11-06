@@ -71,14 +71,37 @@ class Task: NSObject, NSCoding {
     static func save(task:[String: AnyObject], completionHandler: CompletionHandler) {
         Services.save(task) { (success, response) in
             if success {
-                let idTask = response["_id"] as! String
-                let title = response["title"] as! String
-                let priority = Int(response["priority"] as! String)!
-                let descriptionTask = response["title"] as! String
+                if let taskSaved = response["response"] {
+                    let idTask = taskSaved["_id"] as! String
+                    let title = taskSaved["title"] as! String
+                    let priority = Int(taskSaved["priority"] as! String)!
+                    let descriptionTask = taskSaved["title"] as! String
+                    
+                    let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+                    
+                    completionHandler(success: success, response: ["task": task])
+                }
                 
-                let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+            }else {
+                completionHandler(success: success, response: response)
+            }
+        }
+    }
+    
+    static func update(task:[String: AnyObject], completionHandler: CompletionHandler) {
+        Services.update(task) { (success, response) in
+            if success {
+                if let taskSaved = response["response"] {
+                    let idTask = taskSaved["_id"] as! String
+                    let title = taskSaved["title"] as! String
+                    let priority = Int(taskSaved["priority"] as! String)!
+                    let descriptionTask = taskSaved["title"] as! String
+                    
+                    let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+                    
+                    completionHandler(success: success, response: ["task": task])
+                }
                 
-                completionHandler(success: success, response: ["task": task])
             }else {
                 completionHandler(success: success, response: response)
             }

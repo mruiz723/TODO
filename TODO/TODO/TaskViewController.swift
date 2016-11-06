@@ -42,7 +42,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 task?.priority = priority!
                 task?.descriptionTask = descriptionTask
                 
-                Task.save(["_id": (task?.idTask)!, "title": (task?.title)!, "priority": (task?.priority)!, "descriptionTask": (task?.descriptionTask)!], completionHandler: { (success, response) in
+                Task.update(["_id": (task?.idTask)!, "title": (task?.title)!, "priority": (task?.priority)!, "descriptionTask": (task?.descriptionTask)!], completionHandler: { (success, response) in
                     
                     if success {
                         self.delegate?.didUpdate(self.task!)

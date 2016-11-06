@@ -51,4 +51,23 @@ struct Services {
         }
     }
     
+    static func update(task:[String: AnyObject], completionHandler:CompletionHandler) {
+        
+        let urlString = kBaseUrl + kAppIDKenvey + ktasks + "\(task["_id"])"
+        
+        Alamofire.request(.PUT, urlString, parameters: task, headers: headers).validate()
+            .responseJSON { response in
+                switch response.result {
+                case .Success:
+                    if let value = response.result.value {
+                        completionHandler(success:true, response: ["response": value])
+                    }
+                    
+                case .Failure(let error):
+                    completionHandler(success:false, response: ["error": error])
+                }
+        }
+    }
+
+    
 }
