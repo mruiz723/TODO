@@ -116,9 +116,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) in
             dispatch_async(dispatch_get_main_queue(), {
-                self.tasks?.removeAtIndex(indexPath.row)
-//                Task.save(self.tasks!)
-                self.taskTableView.reloadData()
+                let task = self.tasks?[indexPath.row]
+                Task.delete((task?.taskDictionary())!, completionHandler: { (success, response) in
+                    if success {
+                        self.tasks?.removeAtIndex(indexPath.row)
+                        //                Task.save(self.tasks!)
+                        self.taskTableView.reloadData()
+                    }else {
+                        print("Error: \(response["error"])")
+                    }
+                })
             })
         }
         

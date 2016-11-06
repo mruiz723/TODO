@@ -11,7 +11,7 @@ import Foundation
 class Task: NSObject, NSCoding {
 
     //MARK: - Properties
-    var idTask: String
+    var _id: String
     var title: String
     var priority: Int
     var descriptionTask: String
@@ -19,8 +19,8 @@ class Task: NSObject, NSCoding {
     //MARK: - Init
     
     //Designated Initializer
-    init(idTask: String, title:String, priority:Int, descriptionTask:String) {
-        self.idTask = idTask
+    init(_id: String, title:String, priority:Int, descriptionTask:String) {
+        self._id = _id
         self.title = title
         self.priority = priority
         self.descriptionTask = descriptionTask
@@ -30,21 +30,21 @@ class Task: NSObject, NSCoding {
     
    
     required convenience init(coder aDecoder: NSCoder) {
-        let idTask = aDecoder.decodeObjectForKey("idTask") as! String
+        let _id = aDecoder.decodeObjectForKey("idTask") as! String
         let title = aDecoder.decodeObjectForKey("title") as! String
         let priority = aDecoder.decodeIntForKey("priority")
         let descriptionTask = aDecoder.decodeObjectForKey("descriptionTask") as! String
         
-        self.init(idTask: idTask, title: title, priority:Int(priority), descriptionTask:descriptionTask)
+        self.init(_id: _id, title: title, priority:Int(priority), descriptionTask:descriptionTask)
     }
     
     //Convenience Initializer
     convenience override init() {
-        self.init(idTask: "", title:"", priority:0, descriptionTask:"")
+        self.init(_id: "", title:"", priority:0, descriptionTask:"")
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(idTask, forKey: "idTask")
+        aCoder.encodeObject(_id, forKey: "_id")
         aCoder.encodeObject(title, forKey: "title")
         aCoder.encodeInt(Int32(priority), forKey: "priority")
         aCoder.encodeObject(descriptionTask, forKey: "descriptionTask")
@@ -77,7 +77,7 @@ class Task: NSObject, NSCoding {
                     let priority = Int(taskSaved["priority"] as! String)!
                     let descriptionTask = taskSaved["title"] as! String
                     
-                    let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+                    let task = Task(_id:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
                     
                     completionHandler(success: success, response: ["task": task])
                 }
@@ -97,11 +97,21 @@ class Task: NSObject, NSCoding {
                     let priority = Int(taskSaved["priority"] as! String)!
                     let descriptionTask = taskSaved["title"] as! String
                     
-                    let task = Task(idTask:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
+                    let task = Task(_id:idTask , title: title, priority: priority, descriptionTask: descriptionTask)
                     
                     completionHandler(success: success, response: ["task": task])
                 }
                 
+            }else {
+                completionHandler(success: success, response: response)
+            }
+        }
+    }
+    
+    static func delete(task:[String: AnyObject], completionHandler: CompletionHandler) {
+        Services.delete(task) { (success, response) in
+            if success {
+                completionHandler(success: success, response: response)
             }else {
                 completionHandler(success: success, response: response)
             }
@@ -135,4 +145,7 @@ class Task: NSObject, NSCoding {
         return ["","Alta", "Media", "Baja"]
     }
     
+    func taskDictionary() -> [String: AnyObject] {
+        return ["_id": self._id, "title": self.title, "priority": self.priority, "descriptionTask": self.descriptionTask]
+    }
 }
