@@ -26,8 +26,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         SVProgressHUD.show()
         Task.tasks { (success, response) in
+            SVProgressHUD.dismiss()
             if success {
-                SVProgressHUD.dismiss()
                 if let tasks = response["tasks"] as? [Task] {
                     self.tasks = tasks
                     self.taskTableView.reloadData()
