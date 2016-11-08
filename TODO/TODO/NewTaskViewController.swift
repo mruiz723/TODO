@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol NewTaskViewControllerDelegate {
     
@@ -42,8 +43,9 @@ class NewTaskViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 let priority = Task.priorities().indexOf(priorityTextField.text!)
                 let descriptionTask = descriptionTaskTextView.text.characters.count > 0 ? descriptionTaskTextView.text : ""
                 
+                SVProgressHUD.show()
                 Task.save(["title": title, "priority": priority!, "descriptionTask": descriptionTask], completionHandler: { (success, response) in
-                    
+                    SVProgressHUD.dismiss()
                     if success {
                         let task = response["task"] as! Task
                         self.delegate?.didCreate(task)

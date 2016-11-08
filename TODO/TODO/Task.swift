@@ -123,20 +123,23 @@ class Task: NSObject, NSCoding {
         Services.tasks { (success, response) in
             if success {
                 var tasks = [Task]()
-                for(_, value) in response {
+                for(_, value) in response {  // response = [String: AnyObject]
                     let array = value as! NSArray
                     for itemTask in array {
                         let task = Task()
-                        let dictTask = itemTask as! NSDictionary
+                        let dictTask = itemTask as! NSDictionary // itemTask representa una tarea
                         for(keyTask, valueTask) in dictTask{
                             if task.respondsToSelector(NSSelectorFromString(keyTask as! String)) {
-                                task.setValue(valueTask, forKey: keyTask as! String)
+                                task.setValue(valueTask, forKey: keyTask as! String) //KVC key value Coding Key-value coding is a mechanism for accessing an object’s properties indirectly, using strings to identify properties, rather than through invocation of an accessor method or accessing them directly through instance variables.
+                                
                             }
                         }
                         tasks.append(task)
                     }
                 }
                 completionHandler(success:success, response: ["tasks":tasks])
+            }else {
+                completionHandler(success: success, response: response)
             }
         }
     }

@@ -8,5 +8,6 @@ target 'TODO' do
 
  # Pods for TODO
  pod 'Alamofire'
+ pod 'SVProgressHUD', '~> 2.0'
 
 end

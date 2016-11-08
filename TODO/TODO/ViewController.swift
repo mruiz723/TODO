@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NewTaskViewControllerDelegate, TaskViewControllerDelegate {
 
@@ -22,8 +23,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        tasks = Task.tasks()
+        
+        SVProgressHUD.show()
         Task.tasks { (success, response) in
             if success {
+                SVProgressHUD.dismiss()
                 if let tasks = response["tasks"] as? [Task] {
                     self.tasks = tasks
                     self.taskTableView.reloadData()
@@ -116,8 +120,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) in
             dispatch_async(dispatch_get_main_queue(), {
+                SVProgressHUD.show()
                 let task = self.tasks?[indexPath.row]
                 Task.delete((task?.taskDictionary())!, completionHandler: { (success, response) in
+                    SVProgressHUD.dismiss()
                     if success {
                         self.tasks?.removeAtIndex(indexPath.row)
                         //                Task.save(self.tasks!)

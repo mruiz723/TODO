@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol TaskViewControllerDelegate {
     func didUpdate(task: Task)
@@ -41,9 +42,9 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 task?.title = title
                 task?.priority = priority!
                 task?.descriptionTask = descriptionTask
-                
+                SVProgressHUD.show()
                 Task.update((task?.taskDictionary())!, completionHandler: { (success, response) in
-                    
+                    SVProgressHUD.dismiss()
                     if success {
                         self.delegate?.didUpdate(self.task!)
                     }else {
